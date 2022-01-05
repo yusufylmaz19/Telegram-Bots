@@ -11,7 +11,7 @@ food_name=soup.find_all('div',{'class':'contain-text'})
 
 foods=""
 for i in range(len(food_name)):
-    foods +=food_name[i].text 
+    foods +=food_name[i].text
 
 
 API_KEY="your key"

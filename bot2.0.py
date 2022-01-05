@@ -3,15 +3,18 @@ import requests
 from telebot import custom_filters
 from  bs4 import BeautifulSoup as BS
 
-r=requests.get("http://uevi.firat.edu.tr/")
+r=requests.get("http://uevi.mdr.firat.edu.tr/")
 
 soup = BS(r.content,"html.parser")
 soup.prettify()
-food_name=soup.find_all('div',{'class':'field-content'})
+food_name=soup.find_all('div',{'class':'contain-text'})
 
-info=food_name[7].text.strip()
+foods=""
+for i in range(len(food_name)):
+    foods +=food_name[i].text
 
-API_KEY="key"
+
+API_KEY="your key"
 bot =telebot.TeleBot(API_KEY)
 
 @bot.message_handler(commands=['start'])
@@ -20,7 +23,7 @@ def greet(message):
 
 @bot.message_handler(text=['yemek','yeme','yem','ye','y','food','foo','fo','f','fod','ymk'])
 def say_hello(message):  
-	bot.send_message(message.chat.id, info)
+	bot.send_message(message.chat.id, foods)
 
 
 bot.add_custom_filter(custom_filters.TextMatchFilter())
